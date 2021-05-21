@@ -7,10 +7,7 @@ const initialState = {
 export const dataReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCHED_PHOTOS:
-      return {
-        ...state,
-        photos: action.payload,
-      };
+      return { ...state, photos: action.payload };
     default:
       return state;
   }

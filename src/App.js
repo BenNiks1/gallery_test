@@ -1,18 +1,16 @@
 import React from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchedPhotos } from "./redux/actions";
+import { useDispatch } from "react-redux";
 import { Header } from "./components/Header/Header";
-import { Gallary } from "./components/Gallary";
+import Gallary from "./components/Gallary";
+import { fetchPhotos } from "./redux/actions";
+import axios from "axios";
 
 const App = () => {
-  // const dispatch = useDispatch();
-  // const image = useSelector((state) => state.dataReducer.photos.data);
-  // console.log(image);
-  // React.useEffect(() => {
-  //   axios.get("/api/photos").then((res) => dispatch(fetchedPhotos(res.data)));
-  // }, []);
+  const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    dispatch(fetchPhotos('new'));
+  });
   return (
     <div>
       <Header />

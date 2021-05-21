@@ -1,28 +1,22 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Modal } from "antd";
-import { fetchPhotos } from "../../redux/actions";
+import { useSelector, connect } from "react-redux";
+import { Modal, Pagination } from "antd";
 
-export const Gallary = () => {
-  React.useEffect(() => {
-    dispatch(fetchPhotos());
-  }, []);
+const Gallary = ({ filtredPhoto }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
-
-  const dispatch = useDispatch();
-  const photos = useSelector((state) => state.dataReducer.photos.data);
+  console.log(filtredPhoto);
+  const photos = useSelector((state) => state.fetchedData.photos.data);
 
   const showModal = () => {
-    setVisibleModal(true)
+    setVisibleModal(true);
   };
   const hideModal = () => {
-    setVisibleModal(false)
-  }
-
+    setVisibleModal(false);
+  };
   return (
     <section className="gallary container">
-      {photos &&
-        photos.map(({ image }) => (
+      {filtredPhoto &&
+        filtredPhoto.map(({ image }) => (
           <img
             className="gallary__img"
             onClick={showModal}
@@ -31,9 +25,24 @@ export const Gallary = () => {
             key={image.id}
           />
         ))}
-        <Modal visible={visibleModal} onCancel={hideModal} footer={null} closable={false}>
-          <p>123</p>
-        </Modal>
+
+      <Modal
+        visible={visibleModal}
+        onCancel={hideModal}
+        footer={null}
+        closable={false}
+      >
+        <p>123</p>
+      </Modal>
+      <Pagination defaultCurrent={1} total={200} showSizeChanger={false} />
     </section>
   );
 };
+
+const mapStateoProps = (state) => {
+  return {
+    filtredPhoto: state.fetchedData.photos.data,
+  };
+};
+
+export default connect(mapStateoProps)(Gallary);
