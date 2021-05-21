@@ -1,12 +1,12 @@
 import React from "react";
-import { useSelector, connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Modal, Pagination } from "antd";
+import { setPage } from "../../redux/actions";
 
 const Gallary = ({ filtredPhoto }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
-  console.log(filtredPhoto);
-  const photos = useSelector((state) => state.fetchedData.photos.data);
-
+  const dispatch = useDispatch();
+  
   const showModal = () => {
     setVisibleModal(true);
   };
@@ -34,7 +34,12 @@ const Gallary = ({ filtredPhoto }) => {
       >
         <p>123</p>
       </Modal>
-      <Pagination defaultCurrent={1} total={200} showSizeChanger={false} />
+      <Pagination
+        defaultCurrent={1}
+        total={200}
+        showSizeChanger={false}
+        onChange={(page) => dispatch(setPage(page))}
+      />
     </section>
   );
 };
@@ -42,6 +47,7 @@ const Gallary = ({ filtredPhoto }) => {
 const mapStateoProps = (state) => {
   return {
     filtredPhoto: state.fetchedData.photos.data,
+    page: state.fetchedData.page,
   };
 };
 

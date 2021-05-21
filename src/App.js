@@ -1,15 +1,14 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Header } from "./components/Header/Header";
 import Gallary from "./components/Gallary";
 import { fetchPhotos } from "./redux/actions";
-import axios from "axios";
 
-const App = () => {
+const App = ({ page, activeKey }) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(fetchPhotos('new'));
+    dispatch(fetchPhotos(activeKey, page));
   });
   return (
     <div>
@@ -21,4 +20,9 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  activeKey: state.fetchedData.activeKey,
+  page: state.fetchedData.page,
+});
+
+export default connect(mapStateToProps)(App);
