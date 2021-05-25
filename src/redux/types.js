@@ -4,5 +4,3 @@ export const SET_ACTIVE_KEY = "SET_ACTIVE_KEY";
 
 export const NEW_CLIENT = "NEW_CLIENT";
 
-export const PHOTO = "PHOTO";
-export const GET_PHOTO = "GET_PHOTO";

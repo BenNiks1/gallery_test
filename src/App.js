@@ -9,8 +9,7 @@ const App = ({ page, activeKey }) => {
 
   React.useEffect(() => {
     dispatch(fetchPhotos(activeKey, page));
-    // dispatch(newClient());
-    
+    dispatch(newClient());
   });
   return (
     <div>
