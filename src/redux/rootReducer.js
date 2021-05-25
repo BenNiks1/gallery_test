@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import { dataReducer } from "./dataReducer";
+import { fetchReducer } from "./fetchReducer";
+import { localDataReducer } from "./localDataReducer";
 
 export const rootReducer = combineReducers({
-  fetchedData: dataReducer,
+  fetchedData: fetchReducer,
+  localData: localDataReducer,
 });

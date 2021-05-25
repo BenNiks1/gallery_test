@@ -2,28 +2,15 @@ import React from "react";
 import { Button, Modal, Form } from "antd";
 import { Input } from "../Input";
 import axios from "axios";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import { currentUser, isAuthorized } from "../../redux/actions";
 
 const SignUp = ({ clientId, clientSecret }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
-  // const [res, setRes] = React.useState([]);
-
-  const showModal = () => {
-    setVisibleModal(true);
-  };
-  const hideModal = () => {
-    setVisibleModal(false);
-  };
+  const dispatch = useDispatch();
 
   const onFinish = (values) => {
     const body = `grant_type=password&username=${values.username}&password=${values.password}&client_id=${clientId}&client_secret=${clientSecret}`;
-    // const body = new URLSearchParams({
-    //   client_id: clientId,
-    //   grant_type: "password",
-    //   password: values.password,
-    //   username: values.username,
-    //   client_secret: clientSecret,
-    // });
 
     const options = {
       headers: {
@@ -33,28 +20,17 @@ const SignUp = ({ clientId, clientSecret }) => {
 
     axios
       .post("/oauth/v2/token", body, options)
-      .then((res) => console.log(res))
-      .catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
-      });
-
-    setVisibleModal(false);
+      .then((res) => dispatch(currentUser(res.data)))
+      .then(() => dispatch(isAuthorized(true)))
+      .then(() => setVisibleModal(false));
   };
   return (
     <React.Fragment>
-      <Button onClick={showModal}>Login</Button>
+      <Button onClick={() => setVisibleModal(true)}>Login</Button>
       <Modal
-        title="Register"
+        title="Login"
         visible={visibleModal}
-        onCancel={hideModal}
+        onCancel={() => setVisibleModal(false)}
         footer={null}
       >
         <Form name="register" onFinish={onFinish}>

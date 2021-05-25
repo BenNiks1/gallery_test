@@ -61,7 +61,7 @@ const Gallary = ({ photoList }) => {
 
 const mapStateoProps = (state) => {
   return {
-    page: state.fetchedData.page,
+    page: state.localData.page,
     photoList:
       state.fetchedData.photos.data &&
       state.fetchedData.photos.data.map((item) => item),

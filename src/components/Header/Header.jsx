@@ -1,10 +1,11 @@
 import React from "react";
 import { HeaderNav } from "./HeaderNav";
-import SignUp from "../SignUp";
-import Logout from "../SignUp/Logout";
+import SignUp from "../Login";
+import Logout from "../Register";
+import { connect } from "react-redux";
+import AddNewPhoto from "../AddNewPhoto";
 
-
-export const Header = () => {
+const Header = ({ isAuthorized }) => {
   return (
     <header className="header">
       <a href="/" className="header__logo">
@@ -12,9 +13,16 @@ export const Header = () => {
       </a>
       <HeaderNav />
       <div className="header__entry">
+        {isAuthorized && <AddNewPhoto />}
         <SignUp />
-        <Logout/>
+        <Logout />
       </div>
     </header>
   );
 };
+
+const mapStateToProps = (state) => ({
+  isAuthorized: state.localData.isAuthorized,
+});
+
+export default connect(mapStateToProps)(Header);
