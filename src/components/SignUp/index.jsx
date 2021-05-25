@@ -16,23 +16,41 @@ const SignUp = ({ clientId, clientSecret }) => {
   };
 
   const onFinish = (values) => {
+    const body = `grant_type=password&username=${values.username}&password=${values.password}&client_id=${clientId}&client_secret=${clientSecret}`;
+    // const body = new URLSearchParams({
+    //   client_id: clientId,
+    //   grant_type: "password",
+    //   password: values.password,
+    //   username: values.username,
+    //   client_secret: clientSecret,
+    // });
+
+    const options = {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    };
+
     axios
-      .post(
-        "/oauth/v2/token",
-        {
-          clientId: clientId,
-          grant_type: "password",
-          clientSecret: clientSecret,
-        },
-        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-      )
-      .then((res) => console.log(res));
+      .post("/oauth/v2/token", body, options)
+      .then((res) => console.log(res))
+      .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+      });
 
     setVisibleModal(false);
   };
   return (
     <React.Fragment>
-      <Button onClick={showModal}>SignUp</Button>
+      <Button onClick={showModal}>Login</Button>
       <Modal
         title="Register"
         visible={visibleModal}
@@ -52,7 +70,7 @@ const SignUp = ({ clientId, clientSecret }) => {
 const mapStateToProps = (state) => ({
   clientId:
     state.fetchedData.newClient.id + "_" + state.fetchedData.newClient.randomId,
-  clientSecret: state.fetchedData.newClient.sexret,
+  clientSecret: state.fetchedData.newClient.secret,
 });
 
 export default connect(mapStateToProps)(SignUp);
