@@ -3,13 +3,14 @@ import { connect, useDispatch } from "react-redux";
 import { Modal, Pagination } from "antd";
 import { setPage } from "../../redux/actions";
 
-const Gallary = ({ photoName }) => {
+const Gallary = ({ photoList }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
-
+  const [modalPhotoItem, setModalPhotoItem] = React.useState([]);
   const dispatch = useDispatch();
 
-  const showModal = () => {
+  const showModal = (item) => {
     setVisibleModal(true);
+    setModalPhotoItem(item);
   };
   const hideModal = () => {
     setVisibleModal(false);
@@ -17,27 +18,37 @@ const Gallary = ({ photoName }) => {
   return (
     <section className="gallary container">
       <div className="gallary__inner">
-        {photoName &&
-          photoName.map((item) => {
+        {photoList &&
+          photoList.map((item) => {
             return (
               <img
                 className="gallary__img"
-                onClick={showModal}
-                src={`/media/${item.name}`}
-                alt={item.name}
-                key={item.id}
+                onClick={() => {
+                  showModal(item);
+                }}
+                src={`/media/${item.image.name}`}
+                alt={item.image.name}
+                key={item.image.id}
               />
             );
           })}
       </div>
-      <Modal
-        visible={visibleModal}
-        onCancel={hideModal}
-        footer={null}
-        closable={false}
-      >
-        <p>123</p>
-      </Modal>
+      {visibleModal && (
+        <Modal
+          visible={visibleModal}
+          onCancel={hideModal}
+          footer={null}
+          closable={false}
+        >
+          <img
+            className="gallary__modal"
+            src={`/media/${modalPhotoItem.image.name}`}
+            alt={modalPhotoItem.image.name}
+          />
+          <h2>{modalPhotoItem.name}</h2>
+          <p>{modalPhotoItem.description}</p>
+        </Modal>
+      )}
       <Pagination
         defaultCurrent={1}
         total={200}
@@ -51,9 +62,9 @@ const Gallary = ({ photoName }) => {
 const mapStateoProps = (state) => {
   return {
     page: state.fetchedData.page,
-    photoName:
+    photoList:
       state.fetchedData.photos.data &&
-      state.fetchedData.photos.data.map((item) => item.image),
+      state.fetchedData.photos.data.map((item) => item),
   };
 };
 

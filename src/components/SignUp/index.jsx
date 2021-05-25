@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 
 const SignUp = ({ clientId, clientSecret }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
+  // const [res, setRes] = React.useState([]);
 
   const showModal = () => {
     setVisibleModal(true);
@@ -16,18 +17,19 @@ const SignUp = ({ clientId, clientSecret }) => {
 
   const onFinish = (values) => {
     axios
-      .post("/oauth/v2/token", {
-        clientId: clientId,
-        grant_type: 'password',
-        password: values.password,
-        username: values.username,
-        refresh_token:'',
-        clientSecret: clientSecret,
-      })
-      
+      .post(
+        "/oauth/v2/token",
+        {
+          clientId: clientId,
+          grant_type: "password",
+          clientSecret: clientSecret,
+        },
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      )
+      .then((res) => console.log(res));
+
     setVisibleModal(false);
   };
-
   return (
     <React.Fragment>
       <Button onClick={showModal}>SignUp</Button>
@@ -49,9 +51,7 @@ const SignUp = ({ clientId, clientSecret }) => {
 
 const mapStateToProps = (state) => ({
   clientId:
-    state.fetchedData.newClient.clientId +
-    "_" +
-    state.fetchedData.newClient.randomId,
+    state.fetchedData.newClient.id + "_" + state.fetchedData.newClient.randomId,
   clientSecret: state.fetchedData.newClient.sexret,
 });
 
