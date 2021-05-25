@@ -1,7 +1,8 @@
-import { FETCHED_PHOTOS, NEW_CLIENT, SET_ACTIVE_KEY, SET_PAGE } from "./types";
+import { FETCHED_PHOTOS, NEW_CLIENT, PHOTO, SET_ACTIVE_KEY, SET_PAGE } from "./types";
 
 const initialState = {
   photos: [],
+  photo:[],
   newClient: [],
   activeKey: "new",
   page: 1,
@@ -17,6 +18,8 @@ export const dataReducer = (state = initialState, action) => {
       return { ...state, activeKey: action.payload };
     case NEW_CLIENT:
       return { ...state, newClient: action.payload };
+    case PHOTO:
+      return {...state, photo: action.payload}
     default:
       return state;
   }

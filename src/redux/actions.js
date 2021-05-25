@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCHED_PHOTOS, NEW_CLIENT, SET_ACTIVE_KEY, SET_PAGE } from "./types";
+import { FETCHED_PHOTOS, GET_PHOTO, NEW_CLIENT, PHOTO, SET_ACTIVE_KEY, SET_PAGE } from "./types";
 
 export const fetchPhotos = (category, page) => {
   return async (dispatch) => {
@@ -19,6 +19,21 @@ export const newClient = () => {
     dispatch({ type: NEW_CLIENT, payload: response.data });
   };
 };
+
+export const photo = (photo) =>{
+  return {
+    type: PHOTO,
+    payload:photo,
+  }
+}
+
+// export const photo = (photoName) => {
+//   return async (dispatch) => {
+//     const response = await axios.get(`/media/${photoName}`)
+//     dispatch({type:PHOTO,payload:response})
+//   }
+// }
+
 export const setPage = (page) => {
   return {
     type: SET_PAGE,

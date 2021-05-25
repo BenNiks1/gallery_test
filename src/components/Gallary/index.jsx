@@ -3,8 +3,9 @@ import { connect, useDispatch } from "react-redux";
 import { Modal, Pagination } from "antd";
 import { setPage } from "../../redux/actions";
 
-const Gallary = ({ filtredPhoto }) => {
+const Gallary = ({ photoName }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
+
   const dispatch = useDispatch();
 
   const showModal = () => {
@@ -16,16 +17,18 @@ const Gallary = ({ filtredPhoto }) => {
   return (
     <section className="gallary container">
       <div className="gallary__inner">
-        {filtredPhoto &&
-          filtredPhoto.map(({ image }) => (
-            <img
-              className="gallary__img"
-              onClick={showModal}
-              src={image.name}
-              alt={image.id}
-              key={image.id}
-            />
-          ))}
+        {photoName &&
+          photoName.map((item) => {
+            return (
+              <img
+                className="gallary__img"
+                onClick={showModal}
+                src={`/media/${item.name}`}
+                alt={item.name}
+                key={item.id}
+              />
+            );
+          })}
       </div>
       <Modal
         visible={visibleModal}
@@ -47,8 +50,10 @@ const Gallary = ({ filtredPhoto }) => {
 
 const mapStateoProps = (state) => {
   return {
-    filtredPhoto: state.fetchedData.photos.data,
     page: state.fetchedData.page,
+    photoName:
+      state.fetchedData.photos.data &&
+      state.fetchedData.photos.data.map((item) => item.image),
   };
 };
 
