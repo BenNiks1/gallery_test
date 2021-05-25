@@ -2,13 +2,14 @@ import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { Header } from "./components/Header/Header";
 import Gallary from "./components/Gallary";
-import { fetchPhotos } from "./redux/actions";
+import { fetchPhotos, newClient } from "./redux/actions";
 
 const App = ({ page, activeKey }) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(fetchPhotos(activeKey, page));
+    dispatch(newClient())
   });
   return (
     <div>

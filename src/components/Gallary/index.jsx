@@ -6,7 +6,7 @@ import { setPage } from "../../redux/actions";
 const Gallary = ({ filtredPhoto }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
   const dispatch = useDispatch();
-  
+
   const showModal = () => {
     setVisibleModal(true);
   };
@@ -15,17 +15,18 @@ const Gallary = ({ filtredPhoto }) => {
   };
   return (
     <section className="gallary container">
-      {filtredPhoto &&
-        filtredPhoto.map(({ image }) => (
-          <img
-            className="gallary__img"
-            onClick={showModal}
-            src={image.name}
-            alt={image.id}
-            key={image.id}
-          />
-        ))}
-
+      <div className="gallary__inner">
+        {filtredPhoto &&
+          filtredPhoto.map(({ image }) => (
+            <img
+              className="gallary__img"
+              onClick={showModal}
+              src={image.name}
+              alt={image.id}
+              key={image.id}
+            />
+          ))}
+      </div>
       <Modal
         visible={visibleModal}
         onCancel={hideModal}

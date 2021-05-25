@@ -1,0 +1,117 @@
+@import "./fonts";
+
+$mainColor: #ed5992;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Acrom";
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 1346px;
+  margin: 0 auto;
+}
+
+/*header
+===============================*/
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1392px;
+  margin: 27px auto 47px auto;
+  &__logo {
+    margin-right: 178px;
+  }
+  .ant-tabs {
+    flex: 1;
+    &-ink-bar {
+      background: $mainColor;
+    }
+    &-nav {
+      padding: 0 20px;
+    }
+    &-tab {
+      padding: 12px 20px;
+      &:hover {
+        color: $mainColor;
+      }
+      &-active {
+        .ant-tabs-tab-btn {
+          color: $mainColor;
+        }
+      }
+    }
+  }
+}
+
+/*gallary
+===============================*/
+
+.gallary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: repeat(5, 248px);
+    grid-template-rows: repeat(3, 187px);
+    grid-gap: 24px;
+    margin-bottom: 50px;
+  }
+  &__img {
+    border: 1px solid gray;
+    border-radius: 6px;
+    box-shadow: 0 10px 40px -10px #c5c5c5;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 10px 40px -10px #838383;
+      transform: scale(1.1);
+      transition: 0.2s ease-in-out;
+    }
+  }
+}
+
+.ant-pagination {
+  &-item {
+    border-color: #f0f2f5;
+    background-color: #f0f2f5;
+    &:hover {
+      border-color: $mainColor;
+      a {
+        color: $mainColor;
+      }
+    }
+    &-active {
+      border-color: $mainColor;
+      background-color: $mainColor;
+      a {
+        color: #fff;
+      }
+      &:hover a {
+        color: #fff;
+      }
+    }
+    &-link {
+      border-color: #f0f2f5 !important;
+      background-color: #f0f2f5 !important;
+      &:hover {
+        border-color: $mainColor !important;
+        color: $mainColor !important;
+      }
+    }
+  }
+}
