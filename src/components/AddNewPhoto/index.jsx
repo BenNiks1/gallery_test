@@ -42,8 +42,6 @@ const AddNewPhoto = ({ token }) => {
         footer={null}
       >
         <Form onFinish={onFinish}>
-          <Input label={"name"} name={"name"} required={true} />
-          <Input label={"description"} name={"description"} required={true} />
           <Form.Item
             name="upload"
             label="Upload"
