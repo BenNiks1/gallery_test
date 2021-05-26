@@ -3,6 +3,7 @@ import { Button, Modal, Form, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { connect } from "react-redux";
+import { Input } from "../Input";
 
 const normFile = (e) => {
   console.log("Upload event:", e);
@@ -18,8 +19,8 @@ const AddNewPhoto = ({ token }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
 
   const onFinish = (values) => {
-    const data = new FormData();
-    data.append("file", values.upload[0].originFileObj);
+    const mediaData = new FormData();
+    mediaData.append("file", values.upload[0].originFileObj);
 
     const options = {
       headers: {
@@ -28,7 +29,26 @@ const AddNewPhoto = ({ token }) => {
         "Content-Type": "multipart/form-data",
       },
     };
-    axios.post("/api/media_objects", data, options);
+    axios.post("/api/media_objects", mediaData, options).then((res) =>
+      axios.post(
+        "/api/photos",
+        {
+          name: values.name,
+          dateCreate: "2021-05-25T18:03:59.183Z",
+          description: values.description,
+          new: true,
+          popular: true,
+          image: `/api/media_objects/${res.data.id}`,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
+    );
     setVisibleModal(false);
   };
 
@@ -42,6 +62,8 @@ const AddNewPhoto = ({ token }) => {
         footer={null}
       >
         <Form onFinish={onFinish}>
+          <Input label={"name"} name={"name"} required={true} />
+          <Input label={"description"} name={"description"} required={true} />
           <Form.Item
             name="upload"
             label="Upload"

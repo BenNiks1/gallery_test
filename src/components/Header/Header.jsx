@@ -4,6 +4,7 @@ import SignUp from "../Login";
 import Logout from "../Register";
 import { connect } from "react-redux";
 import AddNewPhoto from "../AddNewPhoto";
+import axios from "axios";
 
 const Header = ({ isAuthorized }) => {
   return (
