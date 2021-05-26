@@ -19,23 +19,17 @@ const AddNewPhoto = ({ token }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
 
   const onFinish = (values) => {
-    const body = {
-      name: values.name,
-      dateCreate: "2021-05-25T21:46:49.055Z",
-      description: values.description,
-      new: true,
-      popular: true,
-      image: values.upload[0],
-    };
+    const data = new FormData();
+    data.append("file", values.upload[0].originFileObj);
 
     const options = {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
+        "Content-Type": "multipart/form-data",
       },
     };
-
-    axios.post("/api/photos", body, options);
+    axios.post("/api/media_objects", data, options);
   };
 
   return (
@@ -59,7 +53,7 @@ const AddNewPhoto = ({ token }) => {
                 message: `Please upload your image!"`,
               },
             ]}
-            valuePropName="fileList"
+            valuePropName="file"
             getValueFromEvent={normFile}
           >
             <Upload
