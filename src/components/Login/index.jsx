@@ -5,7 +5,7 @@ import axios from "axios";
 import { connect, useDispatch } from "react-redux";
 import { currentUser, isAuthorized } from "../../redux/actions";
 
-const SignUp = ({ clientId, clientSecret }) => {
+const Login = ({ clientId, clientSecret }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
   const dispatch = useDispatch();
 
@@ -49,4 +49,4 @@ const mapStateToProps = (state) => ({
   clientSecret: state.fetchedData.newClient.secret,
 });
 
-export default connect(mapStateToProps)(SignUp);
+export default connect(mapStateToProps)(Login);

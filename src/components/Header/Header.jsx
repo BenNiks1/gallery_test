@@ -1,10 +1,9 @@
 import React from "react";
 import { HeaderNav } from "./HeaderNav";
-import SignUp from "../Login";
-import Logout from "../Register";
+import Login from "../Login";
+import Register from "../Register";
 import { connect } from "react-redux";
 import AddNewPhoto from "../AddNewPhoto";
-import axios from "axios";
 
 const Header = ({ isAuthorized }) => {
   return (
@@ -15,8 +14,12 @@ const Header = ({ isAuthorized }) => {
       <HeaderNav />
       <div className="header__entry">
         {isAuthorized && <AddNewPhoto />}
-        <SignUp />
-        <Logout />
+        {!isAuthorized && (
+          <>
+            <Login />
+            <Register />
+          </>
+        )}
       </div>
     </header>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs } from "antd";
 import { useDispatch } from "react-redux";
-import { setActiveKey } from "../../redux/actions";
+import {  setActiveKey, setPage } from "../../redux/actions";
 
 import "antd/dist/antd.css";
 
@@ -14,6 +14,7 @@ export const HeaderNav = () => {
       defaultActiveKey="new"
       onChange={(activeKey) => {
         dispatch(setActiveKey(activeKey));
+        dispatch(setPage(1));
       }}
     >
       <TabPane tab="New" key="new" />
@@ -21,3 +22,4 @@ export const HeaderNav = () => {
     </Tabs>
   );
 };
+

@@ -1,9 +1,9 @@
 import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { Modal, Pagination } from "antd";
-import { setPage } from "../../redux/actions";
+import { fetchPhotos, setPage } from "../../redux/actions";
 
-const Gallary = ({ photoList }) => {
+const Gallary = ({ photoList, countOfPages,page }) => {
   const [visibleModal, setVisibleModal] = React.useState(false);
   const [modalPhotoItem, setModalPhotoItem] = React.useState([]);
   const dispatch = useDispatch();
@@ -15,6 +15,8 @@ const Gallary = ({ photoList }) => {
   const hideModal = () => {
     setVisibleModal(false);
   };
+
+
   return (
     <section className="gallary container">
       <div className="gallary__inner">
@@ -49,12 +51,15 @@ const Gallary = ({ photoList }) => {
           <p>{modalPhotoItem.description}</p>
         </Modal>
       )}
-      <Pagination
-        defaultCurrent={1}
-        total={370}
-        showSizeChanger={false}
-        onChange={(page) => dispatch(setPage(page))}
-      />
+      {countOfPages && (
+        <Pagination
+          defaultCurrent={1}
+          total={`${countOfPages}0`}
+          current={page}
+          showSizeChanger={false}
+          onChange={(page) => dispatch(setPage(page))}
+        />
+      )}
     </section>
   );
 };
@@ -65,6 +70,7 @@ const mapStateoProps = (state) => {
     photoList:
       state.fetchedData.photos.data &&
       state.fetchedData.photos.data.map((item) => item),
+    countOfPages: state.fetchedData.photos.countOfPages,
   };
 };
 
