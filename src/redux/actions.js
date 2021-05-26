@@ -10,10 +10,11 @@ import {
 
 export const fetchPhotos = (category, page) => async (dispatch) => {
   const response = await axios.get(
-    `/api/photos?page=${page !== null ? page : "1"}&limit=15&${category}=true`
+    `/api/media_objects?page=${page !== null ? page : "1"}&limit=15&${category}=true`
   );
   dispatch({ type: FETCHED_PHOTOS, payload: response.data });
 };
+
 
 export const newClient = () => async (dispatch) => {
   const response = await axios.post("/api/clients", {

@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Modal, Form, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { Input } from "../Input";
 import axios from "axios";
 import { connect } from "react-redux";
 
@@ -30,6 +29,7 @@ const AddNewPhoto = ({ token }) => {
       },
     };
     axios.post("/api/media_objects", data, options);
+    setVisibleModal(false);
   };
 
   return (
